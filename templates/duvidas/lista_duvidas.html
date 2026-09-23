@@ -1,0 +1,48 @@
+<h1>Minhas Dúvidas</h1>
+<p><a href="{% url 'abrir_duvida' %}">Abrir nova dúvida</a> | <a href="{% url 'base_conhecimento' %}">Base de conhecimento</a></p>
+<p><a href="{% url 'abrir_duvida' %}">Abrir nova dúvida</a> | <form method="post" action="{% url 'logout' %}" style="display:inline">
+  {% csrf_token %}
+  <button type="submit">Sair</button>
+</form>
+
+{% if messages %}
+  {% for m in messages %}<p style="color:red">{{ m }}</p>{% endfor %}
+{% endif %}
+
+<ul>
+{% for d in duvidas %}
+  <li>
+    <strong>{{ d.titulo }}</strong> — {{ d.disciplina }} — {{ d.get_situacao_display }}
+    <p>{{ d.descricao }}</p>
+
+    {% if d.situacao == "AB" and user in d.disciplina.monitores.all %}
+      <form method="post" action="{% url 'assumir_duvida' d.pk %}" style="display:inline">
+        {% csrf_token %}
+        <button type="submit">Assumir</button>
+      </form>
+    {% endif %}
+
+    {% if d.monitor_responsavel == user and d.situacao == "EA" %}
+      <form method="post" action="{% url 'responder_duvida' d.pk %}">
+        {% csrf_token %}
+        <textarea name="resposta" placeholder="Escreva a resposta"></textarea><br>
+        <button type="submit">Responder</button>
+      </form>
+    {% endif %}
+
+    {% if d.resposta %}
+      <p><em>Resposta:</em> {{ d.resposta }}</p>
+    {% endif %}
+
+    {% if d.autor == user and d.resposta and d.situacao != "EN" %}
+      <form method="post" action="{% url 'encerrar_duvida' d.pk %}" style="display:inline">
+        {% csrf_token %}
+        <button type="submit">Encerrar</button>
+      </form>
+    {% endif %}
+  </li>
+  <hr>
+{% empty %}
+  <li>Nenhuma dúvida encontrada.</li>
+{% endfor %}
+</ul>

@@ -1,0 +1,7 @@
+<h1>Abrir Dúvida</h1>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Abrir</button>
+</form>
+<p><a href="{% url 'lista_duvidas' %}">Voltar</a></p>

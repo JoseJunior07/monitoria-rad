@@ -1,0 +1,20 @@
+<h1>Base de Conhecimento</h1>
+<p><a href="{% url 'lista_duvidas' %}">Voltar</a></p>
+
+<form method="get">
+  <input type="text" name="q" value="{{ termo }}" placeholder="Buscar...">
+  <button type="submit">Buscar</button>
+</form>
+
+<ul>
+{% for d in duvidas %}
+  <li>
+    <strong>{{ d.titulo }}</strong> — {{ d.disciplina }}
+    <p>{{ d.descricao }}</p>
+    <p><em>Resposta:</em> {{ d.resposta }}</p>
+  </li>
+  <hr>
+{% empty %}
+  <li>Nenhuma dúvida respondida ainda.</li>
+{% endfor %}
+</ul>
