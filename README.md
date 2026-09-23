@@ -25,6 +25,15 @@ cat > README.md << 'EOF'
 - RF5 (assumir): usa método POST, pois altera o estado do sistema — GET deveria
   ser seguro/idempotente e não deveria alterar dados
 
+## Como executar
+
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+python manage.py runserver
+
+Acesse http://127.0.0.1:8000/login/
+
 ## Requisitos pendentes
 
 - Nenhum
