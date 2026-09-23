@@ -2,7 +2,7 @@ cat > README.md << 'EOF'
 # Sistema de Apoio à Monitoria
 
 ## Integrante(s)
-- [Seu nome completo aqui]
+- José Correia da Cruz Júnior
 
 ## Contas de teste
 
